@@ -16,10 +16,11 @@ jobs:
   job2:
     needs: job1
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.changed_files, 'two/**') }} # Condition for job2 based on changes to path2
+    if: ${{ always() && needs.job1.result != 'running' && contains(github.event.changed_files, 'two/**') }}
+    steps:
     steps:
       - name: Job 2
-        run: echo "This is job 2, triggered by changes to two/**."
+        run: echo "This is job 2, triggered by changes to path 'two/**' and when job1 is skipped, failed, or cancelled."
 
   job3:
     needs: job2
