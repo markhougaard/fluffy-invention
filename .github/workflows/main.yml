@@ -7,9 +7,17 @@ on:
 
 jobs:
   one:
-    paths:
-      - one/**
+    runs-on: ubuntu-latest
     name: "Run when there are changes to One"
+    concurrency: test
     steps:
       - name: "Echo One"
         run: echo 'One runs'
+
+  two:
+    runs-on: ubuntu-latest
+    name: "Run when there are changes to Two"
+    concurrency: test
+    steps:
+      - name: "Echo Two"
+        run: echo 'Two runs'
