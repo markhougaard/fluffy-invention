@@ -16,7 +16,7 @@ jobs:
   job2:
     needs: job1
     runs-on: ubuntu-latest
-    if: ${{ needs.job1.result != 'skipped' && contains(github.event.inputs.files, 'two/') }}
+    if: ${{ needs.job1.result != 'skipped' && (!contains(github.event.inputs.files, 'one/') || contains(github.event.inputs.files, 'two/')) }}
     steps:
       - name: Job 2
         run: echo "This is job 2. Changes detected in folder 'two' after 'job1' completed."
@@ -24,7 +24,7 @@ jobs:
   job3:
     needs: [job1, job2]
     runs-on: ubuntu-latest
-    if: ${{ not(needs.job1.result == 'skipped' && needs.job2.result == 'skipped') && contains(github.event.inputs.files, 'three/') }}
+    if: ${{ (needs.job1.result != 'skipped' && needs.job2.result != 'skipped') && (!contains(github.event.inputs.files, 'one/') || !contains(github.event.inputs.files, 'two/')) && contains(github.event.inputs.files, 'three/') }}
     steps:
       - name: Job 3
         run: echo "This is job 3. Changes detected in folder 'three' after 'job1' and 'job2' completed."
