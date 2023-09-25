@@ -9,7 +9,9 @@ on:
   workflow_run:
     workflows: [one]
     types:
-      - [completed, neutral, skipped]
+      - completed
+      - neutral
+      - skipped
     
 
 jobs:
