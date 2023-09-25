@@ -1,0 +1,16 @@
+name: "Test: Run 'One"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      one/**
+
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    name: "Run when there are changes to One"
+    steps:
+      - name: "Echo One"
+        run: echo 'One runs'
