@@ -16,7 +16,7 @@ jobs:
   job2:
     needs: job1
     runs-on: ubuntu-latest
-    if: ${{ needs.job1.result != 'running' }}
+    if: ${{ contains(github.event.inputs.files, 'two/**') && needs.job1.result != 'running' }}
     steps:
       - name: Job 2
         run: echo "This is job 2. Changes detected in folder 'two' after 'job1' is not running."
