@@ -1,0 +1,15 @@
+name: Second Workflow
+
+on:
+  push:
+    paths:
+      - 'two/**'  # Specify the path for changes that trigger the second workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    needs: First Workflow
+    if: ${{ needs.First Workflow.result != 'running' }}
+    steps:
+      - name: Job 1
+        run: echo "This is job 1. Changes detected in folder 'one'."
