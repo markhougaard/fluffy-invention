@@ -8,23 +8,23 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.changed_files, 'one.md') }} # Condition for job1 based on changes to path1
+    if: ${{ contains(github.event.inputs.files, 'one.md') }}
     steps:
       - name: Job 1
-        run: echo "This is job 1, triggered by changes to path1."
+        run: echo "This is job 1, triggered by changes to one.md."
 
   job2:
     needs: job1
     runs-on: ubuntu-latest
-    if: ${{ always() && needs.job1.result != 'running' && contains(github.event.changed_files, 'two.md') }}
+    if: ${{ needs.job1.result != 'running' && contains(github.event.inputs.files, 'two.md') }}
     steps:
       - name: Job 2
-        run: echo "This is job 2, triggered by changes to path 'two/' and when job1 is skipped, failed, or cancelled."
+        run: echo "This is job 2, triggered by changes to two.md and job1 is not running."
 
   job3:
     needs: job2
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.changed_files, 'three.md') }} # Condition for job3 based on changes to path3
+    if: ${{ contains(github.event.inputs.files, 'three.md') }}
     steps:
       - name: Job 3
-        run: echo "This is job 3, triggered by changes to path3."
+        run: echo "This is job 3, triggered by changes to three.md."
