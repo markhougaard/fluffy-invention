@@ -8,7 +8,7 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.inputs.files, 'one/') }}
+    if: ${{ contains(github.event.inputs.files, 'one/**') }}
     steps:
       - name: Job 1
         run: echo "This is job 1. Changes detected in folder 'one'."
