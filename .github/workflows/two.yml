@@ -16,7 +16,6 @@ on:
 
 jobs:
   two:
-    needs: ${{ github.event.workflow_run.conclusion == 'success' && needs.one }} # Conditional needs
     runs-on: ubuntu-latest
     name: "Run when there are changes to Two"
     steps:
